@@ -1,0 +1,50 @@
+Bootstrap: docker
+From: python:3.11
+
+%post
+    # Update packages and install dependencies
+    apt-get update && apt-get install -y curl git
+
+    # Install Poetry
+    curl -sSL https://install.python-poetry.org | python3 -
+
+    # Ensure Poetry is in PATH
+    export PATH="/root/.local/bin:$PATH"
+
+    echo 'export PATH="/root/.local/bin:$PATH"' >> /etc/profile
+
+    # Set Poetry to use in-project virtual environments
+    /root/.local/bin/poetry config virtualenvs.in-project true
+
+    # Create app directory
+    mkdir -p /app
+    cd /app
+
+    # Copy in project files (pyproject.toml will be added later via %files)
+    # Dependencies will be installed after files are in place
+
+%files
+    pyproject.toml /app/pyproject.toml
+    poetry.lock /app/poetry.lock
+
+%post
+    # Install dependencies
+    cd /app
+    /root/.local/bin/poetry install --no-root
+   
+    yes | poetry cache clear --all ""
+
+    
+%environment
+    # Set up environment for using Poetry-managed venv
+    export POETRY_HOME=/root/.local/share/pypoetry
+    export PATH=/app/.venv/bin:/root/.local/bin:$PATH
+    export VIRTUAL_ENV=/app/.venv
+    export WANDB_API_KEY=86b0ccb4253d14a37e374c92fecbb1169dcbec86
+    export WANDB_CONSOLE=off 
+    export WANDB_SILENT=true
+
+
+%runscript
+    # Use Poetry's virtual environment to run Python
+    exec /app/.venv/bin/python "$@"

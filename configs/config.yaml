@@ -76,7 +76,7 @@ wandb:
   save_dir: "."
   id: null # pass correct id to resume experiment!
   # Below options should not need to be specified
-  # entity: ""  # set to name of your wandb team or just remove it
+  entity: "Long_Memory_Arena"  # set to name of your wandb team or just remove it
   # log_model: False
   # prefix: ""
   # job_type: "train"

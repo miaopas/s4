@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug train module with poetry",
+      "type": "python",
+      "request": "launch",
+      "module": "train",
+      "args": ["experiment=lra/s4-cifar"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}

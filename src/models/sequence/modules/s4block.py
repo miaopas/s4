@@ -54,9 +54,14 @@ class S4Block(SequenceModule):
         tie_dropout=False,
         transposed=True,
         layer='fftconv',
+        last_layer= True,
         **layer_args,  # Arguments into inner layer (e.g. FFTConv)
     ):
         super().__init__()
+        if not last_layer:
+            final_act = None
+            activation = None
+
 
         self.d_model = d_model
         self.transposed = transposed

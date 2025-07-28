@@ -36,6 +36,7 @@ class SequenceResidualBlock(SequenceModule):
             norm=None, # Config for normalization layer
             pool=None,
             drop_path=0.,
+            last_layer=False
         ):
         super().__init__()
 
@@ -44,7 +45,7 @@ class SequenceResidualBlock(SequenceModule):
         self.prenorm = prenorm
         self.bidirectional = bidirectional
         self.transposed = transposed
-
+        layer['last_layer']=last_layer
         self.layer = utils.instantiate(registry.layer, layer, d_input)
         if self.bidirectional:
             self.reverse_layer = utils.instantiate(registry.layer, layer, d_input)

@@ -7,12 +7,12 @@ defaults:
 model:
   dropout: 0.1
   tie_dropout: true
-  n_layers: 1
+  n_layers: 2
   d_model: 512
   prenorm: false
   norm: batch
   layer:
-    d_state: 256
+    d_state: 128
     lr: 0.001
     dt_min: 0.001
     dt_max: 0.1
@@ -42,4 +42,4 @@ train:
   seed: 2222
 
 wandb:
-  name: s4-cifar-1-256
+  name: s4-cifar-2-128

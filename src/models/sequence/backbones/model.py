@@ -81,6 +81,7 @@ class SequenceModel(SequenceModule):
         for l, layer in enumerate(layers):
             # Pool at the end of every n_repeat blocks
             pool_cfg = pool if (l+1) % n_repeat == 0 else None
+            last_layer = (l==len(layers)-1)
             block = SequenceResidualBlock(
                 d,
                 l+1,
@@ -93,6 +94,7 @@ class SequenceModel(SequenceModule):
                 residual=residual,
                 norm=norm,
                 pool=pool_cfg,
+                last_layer=last_layer
             )
             _layers.append(block)
             d = block.d_output
